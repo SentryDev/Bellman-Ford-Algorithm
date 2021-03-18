@@ -32,16 +32,16 @@ class BellmandFord:
         for link in self.graph_structure:
             print("Link value: " + str(link.link_value))
 
-# Manual instantiation of Links, however can be populated with API call
-# Followed by destructuring with loops
-# Instantiation of links + generation of list of Links data structure
-# Structuring of data from API can also be achieved using class encapsulation
-# This separates the computational data and the operations on the data
+
+# Instantiation of links
+# Structuring of data from API should be encapsulated in class structure to provide
+# decoupling, this separates the computational data and the operations on the data
+# Non-API Instantiation of Links
 link_1 = Link(6, 10, 2)
 link_2 = Link(4, 5, 3)
 link_3 = Link(7, 7, 4)
 
-# Instantiation of links + list formation defines the graphical structure
+# list formation defines the graphical structure
 list_link_from_API = [link_1, link_2, link_3]
 
 #Create an instance of a Bellmand Ford operation
