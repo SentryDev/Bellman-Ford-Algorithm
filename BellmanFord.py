@@ -1,4 +1,4 @@
-# Bellmand Ford Algorithm calculates the shortest path form a node to another Node
+# Bellmand Ford Algorithm calculates the shortest path form a node to all other nodes
 
 # Algorithm overview
 # Computation data requires leading, trailing node and connecting Link
@@ -13,10 +13,12 @@
 class Link:
     
     def __init__(self, leading_value, link_value, trailing_address):
-        #Initialize the initial values of the graphical structure
+        #Initialize the initial values of the Link structure
         self.leading_value = leading_value
         self.link_value = link_value
         self.trailing_address = trailing_address
+
+    
 
 
 link_1 = Link(6, 10, 2)
