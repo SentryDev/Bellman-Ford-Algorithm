@@ -27,20 +27,27 @@ class BellmandFord:
 
     # Graph structure is defined external to the class
     # Node values data structure is defined in class
-    def __init__(self, link_list, num_of_nodes):
+    def __init__(self, link_list, num_of_nodes, start_node):
         self.graph_structure = link_list
 
         # Declare and initialize the data structure for node values
-        self.list_nodes = []
+        # All values will default initialize to infinity except starting node 
+        # Starting node initilized to 0 to determine starting point of BMF
+        self.list_nodes = [float('inf')]* num_of_nodes
+        self.list_nodes[start_node-1] = 0
+
+    def show_nodes(self):
+        for node in self.list_nodes:
+            print(node)
 
     def loop_graph(self):
         for link in self.graph_structure:
             print("Link value: " + str(link.link_value))
 
     # An instance of implementation for the Bellmand Ford algorithm
-    def solve(self):
-        for link in self.graph_structure:
-            if(link.leading_value + link.link_value < node[link.trailing_value]):
+    #def solve(self):
+        #for link in self.graph_structure:
+            #if(link.leading_value + link.link_value < list_nodes[link.trailing_value]):
                 
         
 
@@ -61,8 +68,10 @@ link_3 = Link(7, 7, 4)
 # list formation defines the graphical structure
 list_link_from_API = [link_1, link_2, link_3]
 determined_num_nodes = 9
+determined_start_node = 1
 
 #Create an instance of a Bellmand Ford operation
-BellmandFordOperation = BellmandFord(list_link_from_API, determined_num_nodes)
-BellmandFordOperation.loop_graph()
+BellmandFordOperation = BellmandFord(list_link_from_API, 10, 2)
+BellmandFordOperation.show_nodes()
+
 
