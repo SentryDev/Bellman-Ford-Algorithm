@@ -44,6 +44,7 @@ class BellmandFord:
 
     def __init__(self, link_list, num_of_nodes, start_node):
         self.graph_structure = link_list
+        self.num_of_nodes = num_of_nodes
 
         # Declare and initialize the data structure for node values
         # All values will default initialize to infinity except starting node 
@@ -54,7 +55,7 @@ class BellmandFord:
 
     def show_nodes(self):
         for node in self.node_list:
-            print(node)
+            print("Node no: %s, value: %s" % (str(self.node_list.index(node) + 1), str(node)))
 
     def loop_graph(self):
         for link in self.graph_structure:
@@ -64,16 +65,23 @@ class BellmandFord:
     # Performs check for the infinite condition defined by default initialization
     # Loops through link list, computes leading ndoe and link value and overwrites trailing node if value is less
     def solve(self):
-        for link in self.graph_structure:
-            try:
-                if not (self.node_list[link.leading_node_address-1] == float('inf')):
-                    if(self.node_list[link.leading_node_address-1] + link.link_value < self.node_list[link.trailing_node_address-1]):
-                        print("node no: %s, value: %s + link value: %s < node no: %s, value: %s" % (str(link.leading_node_address), str(self.node_list[link.leading_node_address-1]), str(link.link_value), str(link.trailing_node_address), str(self.node_list[link.trailing_node_address-1])))
-                        self.node_list[link.trailing_node_address-1] = self.node_list[link.leading_node_address-1] + link.link_value
-                else:
-                    raise Exception('Selected link with infinite value')
-            except Exception: 
-                logging.exception("Handled exception, selected infinite link is skipped")
+        for x in range(self.num_of_nodes-1):
+            print("Iteration: ", x)
+            for link in self.graph_structure:
+                try:
+                    if not (self.node_list[link.leading_node_address-1] == float('inf')):
+                        if(self.node_list[link.leading_node_address-1] + link.link_value < self.node_list[link.trailing_node_address-1]):
+                            print("Change calculated for node: ", str(link.trailing_node_address))
+                            print("(node no: %s, value: %s + link value: %s) < (node no: %s, value: %s)" % (str(link.leading_node_address), str(self.node_list[link.leading_node_address-1]), str(link.link_value), str(link.trailing_node_address), str(self.node_list[link.trailing_node_address-1])))
+                            self.node_list[link.trailing_node_address-1] = self.node_list[link.leading_node_address-1] + link.link_value
+                        else:
+                            print("No change in node values calculated")
+                            self.show_nodes()
+                    else:
+                        raise Exception('Selected link with infinite value')
+                except Exception: 
+                        print("Selected link with infinite value, skipped: %s -> %s" % (str(link.leading_node_address), str(link.trailing_node_address)))
+                    #logging.exception("Handled exception, selected infinite link. Link skipped")
                 
 
 
@@ -119,9 +127,8 @@ determined_start_node = 1
 
 #Create an instance of a Bellmand Ford operation
 BellmandFordOperation = BellmandFord(list_link_from_API, determined_num_nodes, determined_start_node)
-BellmandFordOperation.show_nodes()
 BellmandFordOperation.solve()
-BellmandFordOperation.show_nodes()
+
 
 
 
