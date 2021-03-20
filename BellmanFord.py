@@ -91,13 +91,33 @@ class BellmandFord:
                             print("(node no: %s, value: %s + link value: %s) < (node no: %s, value: %s)" % (str(link.leading_node_address), str(self.node_list[link.leading_node_address-1]), str(link.link_value), str(link.trailing_node_address), str(self.node_list[link.trailing_node_address-1])))
                             self.node_list[link.trailing_node_address-1] = self.node_list[link.leading_node_address-1] + link.link_value
                         else:
-                            print("No change in node values calculated")
+                            print("No change in node values calculated, Link: %s -> %s" % (str(link.leading_node_address), str(link.trailing_node_address)))
                             self.show_nodes()
                     else:
                         raise Exception('Selected link with infinite value')
                 except Exception: 
-                        print("Selected link with infinite value, skipped: %s -> %s" % (str(link.leading_node_address), str(link.trailing_node_address)))
+                    print("Selected link with infinite value, skipped: %s -> %s" % (str(link.leading_node_address), str(link.trailing_node_address)))
                     #logging.exception("Handled exception, selected infinite link. Link skipped")
+
+            # Iteration for checking a negative cycle
+            if(x == (self.num_of_nodes-2)):
+                print("Negative cycle detection iteration")
+                for link in self.graph_structure:
+                    try:
+                        if not (self.node_list[link.leading_node_address-1] == float('inf')):
+                            if(self.node_list[link.leading_node_address-1] + link.link_value < self.node_list[link.trailing_node_address-1]):
+                                print("Change calculated for node: %s  Link: %s -> %s" % (str(link.trailing_node_address), str(link.leading_node_address), str(link.trailing_node_address)))
+                                print("(node no: %s, value: %s + link value: %s) < (node no: %s, value: %s)" % (str(link.leading_node_address), str(self.node_list[link.leading_node_address-1]), str(link.link_value), str(link.trailing_node_address), str(self.node_list[link.trailing_node_address-1])))
+                                self.node_list[link.trailing_node_address-1] = self.node_list[link.leading_node_address-1] + link.link_value
+                                
+                            else:
+                                print("No change in node values calculated, Link: %s -> %s" % (str(link.leading_node_address), str(link.trailing_node_address)))
+                                self.show_nodes()
+                        else:
+                            raise Exception('Selected link with infinite value')
+                    except Exception: 
+                        print("Selected link with infinite value on cycle detection iteration, skipped: %s -> %s" % (str(link.leading_node_address), str(link.trailing_node_address)))
+                        #logging.exception("Handled exception, selected infinite link. Link skipped")
                 
 
 
