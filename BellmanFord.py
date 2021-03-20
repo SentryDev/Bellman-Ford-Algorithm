@@ -22,6 +22,22 @@ import logging
 # Therefore we have chosen to decouple the link data structure and node list data structure
 # And sacrificing an additional access for the leading node
 
+# --Reasoning, can be skipped--
+# When creating the structure of the links which define the graphical structure, the order defined defines the order of computation
+# However, it may not be possible to always order links under columns defined in the graph structure
+# For example, to define links with columns, we partition the links in layers (1,2), (1,3), (1,4) may be in the same column
+# (3,5) may reside in a different column
+# Because of this problem, we must perform checks on the value of the leading node in the initial iteration
+# If we access a value of infinity, we have accessed a link in a further column in the graph structure
+
+# --Analysis of the link computation sequence-- can be skipped
+# The performance of the algorithm depends strongly on the ordering of the links
+# The greater the number of infinite links selected, the lower the performance of the algorithm
+# Consider the links containing the intial starting node placed at the end of the link data structure
+# This creates the worst possible performance, since we will select all infinite links until a non-infinite node value
+# If enough infinite links are selected, it may be worth implementing a pre-processor to provide re-ordered links to the BMF instance
+# An alternative solution may be to implement a faster search for the link data structure instead of linear search
+
 
 # 1) Modeling the graphical data structure
 # We define the graphical links using a class Data structure
@@ -57,9 +73,9 @@ class BellmandFord:
         for node in self.node_list:
             print("Node no: %s, value: %s" % (str(self.node_list.index(node) + 1), str(node)))
 
-    def loop_graph(self):
+    def link_order(self):
         for link in self.graph_structure:
-            print("Link value: " + str(link.link_value))
+            print("Link no: %s (%s->%s) " % (str(self.graph_structure.index(link)+1), str(link.leading_node_address), str(link.trailing_node_address)))
 
     # An instance of implementation for the Bellmand Ford algorithm solver
     # Performs check for the infinite condition defined by default initialization
@@ -103,23 +119,6 @@ link_2 = Link(1, 20, 3)
 link_3 = Link(1, 7, 4)
 link_4 = Link(2, 5, 3)
 
-
-# --Reasoning, can be skipped--
-# When creating the structure of the links which define the graphical structure, the order defined defines the order of computation
-# However, it may not be possible to always order links under columns defined in the graph structure
-# For example, to define links with columns, we partition the links in layers (1,2), (1,3), (1,4) may be in the same column
-# (3,5) may reside in a different column
-# Because of this problem, we must perform checks on the value of the leading node in the initial iteration
-# If we access a value of infinity, we have accessed a link in a further column in the graph structure
-
-# --Analysis of the link computation sequence-- can be skipped
-# The performance of the algorithm depends strongly on the ordering of the links
-# The greater the number of infinite links selected, the lower the performance of the algorithm
-# Consider the links containing the intial starting node placed at the end of the link data structure
-# This creates the worst possible performance, since we will select all infinite links until a non-infinite node value
-# If enough infinite links are selected, it may be worth implementing a pre-processor to provide re-ordered links to the BMF instance
-# An alternative solution may be to implement a faster search for the link data structure instead of linear search
-
 # list formation defines the graphical structure and the computation order
 list_link_from_API = [test_link, link_2, link_1, link_3, link_4]
 determined_num_nodes = 5
@@ -127,6 +126,7 @@ determined_start_node = 1
 
 #Create an instance of a Bellmand Ford operation
 BellmandFordOperation = BellmandFord(list_link_from_API, determined_num_nodes, determined_start_node)
+BellmandFordOperation.link_order()
 BellmandFordOperation.solve()
 
 
