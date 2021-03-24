@@ -58,8 +58,8 @@ class BellmandFord:
     # Graph structure is defined external to the class
     # Node values data structure is defined in class
 
-    def __init__(self, link_list, num_of_nodes, start_node):
-        self.graph_structure = link_list
+    def __init__(self, graph_structure, num_of_nodes, start_node):
+        self.graph_structure = graph_structure
         self.num_of_nodes = num_of_nodes
 
         # Declare and initialize the data structure for node values
@@ -126,12 +126,12 @@ link_3 = Link(1, 7, 4)
 link_4 = Link(2, 5, 3)
 
 # list formation defines the graphical structure and the computation order
-list_link_from_API = [test_link, link_2, link_1, link_3, link_4]
+graph_structure_API = [test_link, link_2, link_1, link_3, link_4]
 determined_num_nodes = 5
 determined_start_node = 1
 
 #Create an instance of a Bellmand Ford operation
-BellmandFordOperation = BellmandFord(list_link_from_API, determined_num_nodes, determined_start_node)
+BellmandFordOperation = BellmandFord(graph_structure_API, determined_num_nodes, determined_start_node)
 BellmandFordOperation.link_order()
 BellmandFordOperation.solve()
 
