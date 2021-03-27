@@ -1,4 +1,5 @@
 import logging
+import copy
 
 # Bellmand Ford Algorithm Python implemantion 
 # Calculates the shortest path from a node to all other nodes
@@ -70,14 +71,16 @@ class BellmandFord:
         self.node_list[start_node-1] = 0
 
     def show_nodes(self):
+        print("Current node values: ")
         for node in self.node_list:
             print("Node no: %s, value: %s" % (str(self.node_list.index(node) + 1), str(node)))
 
     def link_order(self):
+        print("Current link order: ")
         for link in self.graph_structure:
             print("Link no: %s (%s->%s) " % (str(self.graph_structure.index(link)+1), str(link.leading_node_address), str(link.trailing_node_address)))
 
-    def link_computation(self):
+    def link_computation(self, error_message="Infinite value selected"):
         for link in self.graph_structure:
                 try:
                     if not (self.node_list[link.leading_node_address-1] == float('inf')):
@@ -86,12 +89,12 @@ class BellmandFord:
                             print("(node no: %s, value: %s + link value: %s) < (node no: %s, value: %s)" % (str(link.leading_node_address), str(self.node_list[link.leading_node_address-1]), str(link.link_value), str(link.trailing_node_address), str(self.node_list[link.trailing_node_address-1])))
                             self.node_list[link.trailing_node_address-1] = self.node_list[link.leading_node_address-1] + link.link_value
                         else:
-                            print("No change in node values calculated, Link: %s -> %s" % (str(link.leading_node_address), str(link.trailing_node_address)))
-                            self.show_nodes()
+                            print("No change in node values calculated, Link: %s -> %s \n" % (str(link.leading_node_address), str(link.trailing_node_address)))
+
                     else:
                         raise Exception('Selected link with infinite value')
                 except Exception: 
-                    print("Selected link with infinite value, skipped: %s -> %s" % (str(link.leading_node_address), str(link.trailing_node_address)))
+                    print("%s: %s -> %s \n" % (error_message, str(link.leading_node_address), str(link.trailing_node_address)))
                     #logging.exception("Handled exception, selected infinite link. Link skipped")
 
     # An instance of implementation for the Bellmand Ford algorithm solver
@@ -99,13 +102,27 @@ class BellmandFord:
     # Loops through link list, computes leading ndoe and link value and overwrites trailing node if value is less
     def solve(self):
         for x in range(self.num_of_nodes-1):
+            print("\nIteration: %s\n" % (str(x+1)))
             self.link_computation()
 
-            # Iteration for checking a negative cycle
+            # Last iteration check for starting position error
             if(x == (self.num_of_nodes-2)):
-                print("Negative cycle detection iteration")
-                self.link_computation()    
+                for link in self.graph_structure:
+                    if(self.node_list[link.leading_node_address-1] == float('inf')):
+                        print("\nStarting node position error detected! %s -> %s Not computable, Exited!\n" % (str(link.leading_node_address), str(link.trailing_node_address)))
+                        break
 
+        # Iteration check for negative cycle
+        for link in self.graph_structure:
+            if(self.node_list[link.leading_node_address-1] + link.link_value < self.node_list[link.trailing_node_address-1]):
+                print("\nNegative cycle detected! Exit!\n")
+                break
+
+        print("Completed computation!\n")
+                
+
+        
+    
 
  
  # Pre-processor of data required for Bellmand Ford Algorithm
@@ -134,11 +151,7 @@ determined_start_node = 1
 BellmandFordOperation = BellmandFord(graph_structure_API, determined_num_nodes, determined_start_node)
 BellmandFordOperation.link_order()
 BellmandFordOperation.solve()
+BellmandFordOperation.show_nodes()
 
-
-
-
-
-
-
+print(__file__)
 
