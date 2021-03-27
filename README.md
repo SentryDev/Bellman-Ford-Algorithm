@@ -36,7 +36,7 @@ When creating the structure of the links which define the graphical structure, t
 However, it may not be possible to always order links such all selected values are non-infinite
 For example, consider the links ordered (1,2), (1,3), (1,4), (4,3) and choosing the starting node to be 4. With this ordering of links, we selecte 3 infinite value links before the starting node link value can be selected.
 Because of this problem, we must perform checks on the value of the leading node in the initial iteration.
-If we access a value of infinity, we have accessed a link in a further column in the graph structure and therefore can be skipped.
+If we access a value of infinity, we have accessed a link which cannot be computed and therefore can be skipped.
 
 # Analysis of the link computation sequence
 The performance of the algorithm depends strongly on the ordering of the links.
