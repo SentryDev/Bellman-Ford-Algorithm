@@ -2,8 +2,8 @@
 Python implementation of Bellman Ford algorithm
 
 # Bellmand Ford Algorithm Python implemantion 
-Calculates the shortest path from a vertex to all other vertices and identifies a negative cycle
-The Bellman Ford is mainly used for cycle idenitficationr ather than a more efficient shortest path algorithm
+Calculates the shortest path from a vertex to all other vertices and identifies a negative cycle.
+The Bellman Ford is mainly used for cycle idenitfication rather than a more efficient shortest path algorithm.
 
 # Algorithm overview
 Computation data requires leading, trailing node and connecting Link
@@ -19,7 +19,7 @@ Time complexity O(EV), for complete graphs O(V^3)
 In this documentation, we show an implementation of the Bellman Ford using Python and provide a reasoned methodology for the design decisions.
 
 # Implementation of Node list data structure       
-There can be two ways to store the structure for the list of nodes aand their values
+There can be two ways to store the structure for the list of nodes aand their values.
 
 For example, the node number identification can be stored with the link data structure
 This will reduce the additional access to retrieve the node value from an alternative node
@@ -33,9 +33,8 @@ Therefore, we have chosen to decouple the link data structure and node list data
 
 # Infinite link value check
 When creating the structure of the links which define the graphical structure, the order defined defines the order of computation.
-However, it may not be possible to always order links under columns defined in the graph structure.
-For example, to define links with columns, we partition the links in layers such that (1,2), (1,3), (1,4) may be in the same column while
-(3,5) may reside in a different column.
+However, it may not be possible to always order links such all selected values are non-infinite
+For example, consider the links ordered (1,2), (1,3), (1,4), (4,3) and choosing the starting node to be 4. With this ordering of links, we selecte 3 infinite value links before the starting node link value can be selected.
 Because of this problem, we must perform checks on the value of the leading node in the initial iteration.
 If we access a value of infinity, we have accessed a link in a further column in the graph structure and therefore can be skipped.
 
