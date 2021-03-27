@@ -11,6 +11,7 @@ Addition arithmetic, comparison, and write to memory
 
 # Implementation of Node list data structure       
 There can be two ways to store the structure for the list of nodes aand their values
+
 For example, the node number identification can be stored with the link data structure
 This will reduce the additional access to retrieve the node value from an alternative node
 data structure
