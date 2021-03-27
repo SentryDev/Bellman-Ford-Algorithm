@@ -2,12 +2,21 @@
 Python implementation of Bellman Ford algorithm
 
 # Bellmand Ford Algorithm Python implemantion 
-Calculates the shortest path from a node to all other nodes
+Calculates the shortest path from a vertex to all other vertices and identifies a negative cycle
+The Bellman Ford is mainly used for cycle idenitficationr ather than a more efficient shortest path algorithm
 
 # Algorithm overview
 Computation data requires leading, trailing node and connecting Link
+
 Operations include access of leading, trailing and connecting link
+
 Addition arithmetic, comparison, and write to memory
+
+# Algorithm overview
+Time complexity O(EV), for complete graphs O(V^3)
+
+# Documentation
+In this documentation, we show an implementation of the Bellman Ford using Python and provide a reasoned methodology for the design decisions.
 
 # Implementation of Node list data structure       
 There can be two ways to store the structure for the list of nodes aand their values
