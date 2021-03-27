@@ -1,5 +1,4 @@
 import logging
-import copy
 
 # Bellmand Ford Algorithm Python implemantion 
 # Calculates the shortest path from a node to all other nodes
@@ -106,13 +105,15 @@ class BellmandFord:
             self.link_computation()
 
             # Last iteration check for starting position error
+            # Link computation method is not used because it does not contian a break condition
+            # A break condition improves can improve the performance
             if(x == (self.num_of_nodes-2)):
                 for link in self.graph_structure:
                     if(self.node_list[link.leading_node_address-1] == float('inf')):
                         print("\nStarting node position error detected! %s -> %s Not computable, Exited!\n" % (str(link.leading_node_address), str(link.trailing_node_address)))
                         break
 
-        # Iteration check for negative cycle
+        # Iteration check for negative cycle with break condition
         for link in self.graph_structure:
             if(self.node_list[link.leading_node_address-1] + link.link_value < self.node_list[link.trailing_node_address-1]):
                 print("\nNegative cycle detected! Exit!\n")
@@ -120,9 +121,6 @@ class BellmandFord:
 
         print("Completed computation!\n")
                 
-
-        
-    
 
  
  # Pre-processor of data required for Bellmand Ford Algorithm
@@ -152,6 +150,4 @@ BellmandFordOperation = BellmandFord(graph_structure_API, determined_num_nodes, 
 BellmandFordOperation.link_order()
 BellmandFordOperation.solve()
 BellmandFordOperation.show_nodes()
-
-print(__file__)
 
